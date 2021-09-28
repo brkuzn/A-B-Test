@@ -18,8 +18,8 @@ df_control = pd.read_excel("datasets/ab_testing.xlsx", sheet_name = "Control Gro
 df_test = pd.read_excel("datasets/ab_testing.xlsx", sheet_name = "Test Group")
 
 df_control.head()
-#i want to get rid of columns that call "unnamed".
-#so i'll redefine the df with 4 variables.
+#i want to get rid of columns that are called "unnamed".
+#so i'll redefine the dataframe with 4 variables.
 df_control = df_control[["Impression", "Click", "Purchase", "Earning"]]
 df_control.head()
 
@@ -29,7 +29,7 @@ df_test.head()
 
 
 
-#now let's look at our average earnings by clicks.
+# our average earnings by clicks:
 
 df_control.groupby("Click").agg({"Earning" : "mean"}).sort_values("Earning", ascending = False).head()
 """
@@ -54,8 +54,8 @@ Click       Earning
 """
 
 
-#we can easily see that we have achieved much better results with the new system.
-#but again, is it statistically significant? is there a real difference?
+#the results showed that the new system provided a more successful outcome.
+#but is it statistically significant? is there a real difference?
 
 
 ########################################
@@ -81,7 +81,7 @@ test_stat, pvalue = shapiro(df_test["Click"])
 print('Test Stat = %.4f, p-value = %.4f' % (test_stat, pvalue))
 #Test Stat = 0.9844, p-value = 0.8461
 #Test Stat = 0.9896, p-value = 0.9699
-#we can't reject H0. now we'll look assumption of homogeneity of variance
+#we can't reject H0. now we'll look at the assumption of homogeneity of variance.
 
 
 #########################################
@@ -102,7 +102,7 @@ print('Test Stat = %.4f, p-value = %.4f' % (test_stat, pvalue))
 #Test Stat = 6.3041, p-value = 0.0141
 
 #H0 REJECTED.
-#So Assumption of Homogeneity of Variance is provided is not provided.
+#So Assumption of Homogeneity of Variance is not provided.
 
 #######################################################
 #Application of hypothesis with t test
@@ -115,7 +115,7 @@ test_stat, pvalue = ttest_ind(df_control["Click"],
 print('Test Stat = %.4f, p-value = %.4f' % (test_stat, pvalue))
 
 #Test Stat = 4.4266, p-value = 0.0000
-#H0 rejected, so we cant say there is no significant difference between the average bidding and the maximum bidding.
+#H0 rejected, so it can't be said that there is no significant difference between the average bidding and the maximum bidding.
 #new feature seems better.
 #We used T-test, Shapiro and Levene tests. We used a parametric T test, since the distribution of normality was provided.
 
