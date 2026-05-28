@@ -1,6 +1,15 @@
 # A/B Test — Average Bidding vs. Maximum Bidding
 
-A complete A/B test analysis evaluating whether a new ad bidding mechanism (**Average Bidding**) outperforms the existing one (**Maximum Bidding**) across four business metrics: impressions, clicks, purchases, and revenue.
+## Case Study
+
+An e-commerce platform recently introduced a new type of bid called **Average Bidding** as an alternative to the existing **Maximum Bidding** mechanism. One of the platform's customers decided to test this new feature and requested an A/B test to understand whether average bidding returns better results than maximum bidding.
+
+The dataset contains website activity data for this customer — including the number of advertisements users viewed and clicked on, the number of purchases made, and the revenue generated. The experiment ran for **40 days**, with the customer split into two groups:
+
+- **Control Group** — continued using Maximum Bidding (existing system)
+- **Test Group** — switched to Average Bidding (new system)
+
+The central question: **does average bidding generate more revenue than maximum bidding, and is any observed difference statistically significant?**
 
 ---
 
@@ -8,7 +17,7 @@ A complete A/B test analysis evaluating whether a new ad bidding mechanism (**Av
 
 > **Average Bidding generates +31.77% more revenue** — statistically significant (p ≈ 0, Cohen's d = 2.07), with a 95% confidence interval of [+476, +737] on the mean difference.
 
-**Switch to Average Bidding.**
+**Recommendation: Switch to Average Bidding.**
 
 ---
 
@@ -23,14 +32,28 @@ A complete A/B test analysis evaluating whether a new ad bidding mechanism (**Av
 
 ### Derived Business Metrics
 
-| Metric | Control | Test | Change |
+| Metric | Control (Max Bid) | Test (Avg Bid) | Change |
 |--------|---------|------|--------|
 | CTR (Click / Impression) | 5.36% | 3.42% | −36.2% |
 | Conversion Rate (Purchase / Click) | 11.6% | 15.7% | **+35.3%** |
 | Revenue per Click | 0.408 | 0.668 | **+63.7%** |
 | Revenue per Impression | 0.0195 | 0.0214 | +9.7% |
 
-**The mechanism:** Average bidding reaches a broader audience (more impressions) with a lower click-through rate, but the users who *do* click convert at a 35% higher rate and spend 64% more per click. It is not failing to attract clicks — it is targeting higher-intent users.
+**The mechanism:** Average bidding reaches a broader audience (more impressions) with a lower click-through rate, but the users who *do* click convert at a 35% higher rate and spend 64% more per click. The lower click count is not a failure — it reflects more selective, higher-intent audience targeting.
+
+---
+
+## Dataset
+
+| Variable | Description |
+|----------|-------------|
+| Impression | Number of times the advertisement was displayed |
+| Click | Number of clicks on the advertisement |
+| Purchase | Number of completed purchases |
+| Earning | Revenue generated |
+
+- **Control Group:** Maximum Bidding — 40 daily observations
+- **Test Group:** Average Bidding — 40 daily observations
 
 ---
 
@@ -38,24 +61,16 @@ A complete A/B test analysis evaluating whether a new ad bidding mechanism (**Av
 
 **Three-step statistical testing pipeline** applied to each variable:
 
-1. **Shapiro-Wilk** — normality assumption  
-2. **Levene** — variance homogeneity (if both groups are normal)  
+1. **Shapiro-Wilk** — normality assumption
+2. **Levene** — variance homogeneity (only if both groups pass normality)
 3. **Student t-test** (equal variance) · **Welch t-test** (unequal variance) · **Mann-Whitney U** (non-normal fallback)
 
 **Beyond p-values:**
-- **Cohen's d** — effect size for practical significance
+- **Cohen's d** — effect size to quantify practical significance
 - **95% Confidence Intervals** on the mean difference
 - **Derived metrics** — CTR, conversion rate, revenue per click, revenue per impression
 
 Significance level: α = 0.05
-
----
-
-## Dataset
-
-- **Control Group:** Maximum Bidding — 40 daily observations  
-- **Test Group:** Average Bidding — 40 daily observations  
-- **Variables:** Impression, Click, Purchase, Earning
 
 ---
 
@@ -78,6 +93,6 @@ jupyter notebook ab_test_improved.ipynb
 ```
 
 The notebook produces three output figures:
-- `ab_distributions.png` — box plots + KDE for all variables
-- `ab_derived_metrics.png` — CTR, conversion rate, revenue efficiency
+- `ab_distributions.png` — box plots + KDE distributions for all variables
+- `ab_derived_metrics.png` — CTR, conversion rate, revenue efficiency comparison
 - `ab_summary_dashboard.png` — % change with CI whiskers + Cohen's d chart
