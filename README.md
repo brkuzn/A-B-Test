@@ -96,3 +96,12 @@ The notebook produces three output figures:
 - `ab_distributions.png` — box plots + KDE distributions for all variables
 - `ab_derived_metrics.png` — CTR, conversion rate, revenue efficiency comparison
 - `ab_summary_dashboard.png` — % change with CI whiskers + Cohen's d chart
+
+
+<img width="2385" height="594" alt="image" src="https://github.com/user-attachments/assets/702c6a25-ced5-4dd3-98d0-6f89d40986bc" />
+<img width="2685" height="1182" alt="image" src="https://github.com/user-attachments/assets/670caa26-7f1d-432f-91ed-c4cbfb137cdc" />
+<img width="2042" height="1442" alt="image" src="https://github.com/user-attachments/assets/edf36787-f111-4c93-8cf2-f83f17f86efd" />
+
+
+
+
